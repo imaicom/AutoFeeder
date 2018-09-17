@@ -6,7 +6,7 @@ void setup(){
 lcd.begin(16, 2);
 lcd.print("Hello Arduino");
 lcd.setCursor(0,1);
-lcd.print("Hello Minoru!");
+lcd.print("Hello Makoto!");
 }
  
 void loop(){
