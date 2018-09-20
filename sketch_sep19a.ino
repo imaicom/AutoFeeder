@@ -17,7 +17,7 @@ lcd.begin(16, 2);
 lcd.print("Hello Arduino");
 lcd.setCursor(0,1);
 lcd.print("             ");
-attachInterrupt(0, counta, RISING);  //INT0 - D2 pin
+attachInterrupt(0, counta, FALLING);  //INT0 - D2 pin
 
 }
  
@@ -42,5 +42,5 @@ void loop(){
 
 void counta() {
 delay(1);
-if(!digitalRead(A5)) {i--;}else{i++;};
+if(!digitalRead(A5)) {i++;}else{i--;};
 }
