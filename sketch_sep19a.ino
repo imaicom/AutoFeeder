@@ -26,7 +26,7 @@ void loop(){
   if(!digitalRead(A3)){
     delay(10);
     while(!digitalRead(A3));
-    i++;
+    i=0;
     lcd.setCursor(0,1);
     sprintf(buf,"%04d",i);
     lcd.print(buf);
