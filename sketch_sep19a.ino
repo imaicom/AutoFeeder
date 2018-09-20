@@ -17,7 +17,7 @@ lcd.begin(16, 2);
 lcd.print("Hello Arduino");
 lcd.setCursor(0,1);
 lcd.print("             ");
-attachInterrupt(0, counta, RISING);
+attachInterrupt(0, counta, RISING);  //INT0 - D2 pin
 
 }
  
