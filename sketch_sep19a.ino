@@ -3,6 +3,8 @@
 LiquidCrystal lcd = LiquidCrystal(12,11,10,5,4,3,1);
 
 int i=0;
+volatile int state = LOW;
+
 
 void setup(){
 pinMode( A0,INPUT_PULLUP ); // 入力プルアップ抵抗付加
@@ -15,6 +17,8 @@ lcd.begin(16, 2);
 lcd.print("Hello Arduino");
 lcd.setCursor(0,1);
 lcd.print("             ");
+attachInterrupt(0, counta, RISING);
+
 }
  
 void loop(){
@@ -27,11 +31,16 @@ void loop(){
     sprintf(buf,"%04d",i);
     lcd.print(buf);
   };
-  if(!digitalRead(2)){
-    delay(1);while(!digitalRead(2));
-    if(!digitalRead(A5)) {i--;}else{i++;};
+//  if(!digitalRead(2)){
+//    delay(1);while(!digitalRead(2));
+//    if(!digitalRead(A5)) {i--;}else{i++;};
     lcd.setCursor(0,1);
     sprintf(buf,"%04d",i);
     lcd.print(buf);
-  };
+//  };
+}
+
+void counta() {
+delay(1);
+if(!digitalRead(A5)) {i--;}else{i++;};
 }
