@@ -26,15 +26,26 @@ digitalWrite( 8, 0 );
 digitalWrite( 9, 0);
 
 lcd.begin(16, 2);
-lcd.print("Fwd Back");
+lcd.print(" Fwd    Back");
 lcd.setCursor(0,1);
-lcd.print("Auto +0.5");
+lcd.print(" Feed   +0.5");
 //lcd.cursor();
 lcd.blink();
 attachInterrupt(0, counta, FALLING);  //INT0 - D2 pin
 }
 
 void loop(){
+  lcd.setCursor(0,0);
+  delay(1000);
+
+  lcd.setCursor(7,0);
+  delay(1000);
+
+  lcd.setCursor(0,1);
+  delay(1000);
+  
+  lcd.setCursor(7,1);
+  delay(1000);
 }
 
 void counta() {
