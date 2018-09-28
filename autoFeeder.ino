@@ -155,8 +155,8 @@ void loop() {
         hi_beep(); delay(500);
         hi_beep(); delay(500);
         if (i > 0) {
-          if(i>=2) z = int(float((float(abs(i+2))+float(p5)/10.0) / 0.1727825));
-          else     z = int(float((float(abs(i  ))+float(p5)/10.0) / 0.1727825));
+          if (i >= 2) z = int(float((float(abs(i + 2)) + float(p5) / 10.0) / 0.1727825));
+          else     z = int(float((float(abs(i  )) + float(p5) / 10.0) / 0.1727825));
           for (zz = 1; zz <= z; zz++) {
             digitalWrite( 8, 1);
             digitalWrite( 9, 0);
@@ -167,7 +167,7 @@ void loop() {
             if (!digitalRead(A3)) break;
           };
         } else {
-          z = int(float((float(abs(i))+float(p5)/10.0) / 0.1727825));
+          z = int(float((float(abs(i)) + float(p5) / 10.0) / 0.1727825));
           for (zz = 1; zz <= z; zz++) {
             digitalWrite( 8, 0);
             digitalWrite( 9, 0);
@@ -181,21 +181,11 @@ void loop() {
         while (!digitalRead(A3));
       };
 
-      if (!digitalRead(A2)) {
-        delay(10);
-        while (!digitalRead(A2));
-        i = 0;
-        j = 0;
-        lcd.setCursor(0, 1);
-        sprintf(buf, "%04d", i);
-        lcd.print(buf);
-      };
-
       j++; if (j > 29) j = 29;
 
       lcd.setCursor(0, 1);
-      if(i>=2) sprintf(buf, "%4d.%1d mm + 2 mm", i,p5);
-      else    sprintf(buf, "%4d.%1d mm       ", i,p5);
+      if (i >= 2) sprintf(buf, "%4d.%1d mm + 2 mm", i, p5);
+      else     sprintf(buf, "%4d.%1d mm       ", i, p5);
       lcd.print(buf);
       if (old_i != i) beep();
       old_i = i;
@@ -222,8 +212,12 @@ void loop() {
     do {
 
       lcd.setCursor(4, 0); lcd.print(p5);
-      if(!digitalRead(A3)) {delay(10);while (!digitalRead(A3));break;}
-    } while(digitalRead(A2)); // menu
+      if (!digitalRead(A3)) {
+        delay(10);
+        while (!digitalRead(A3));
+        break;
+      }
+    } while (digitalRead(A2)); // menu
     m = 0;
   };
 
