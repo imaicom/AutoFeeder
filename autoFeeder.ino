@@ -9,6 +9,7 @@ int i = 0;
 int j = 0;
 int p5 = 0;
 int pp5 = 0;
+int ppp5 = 0;
 int z, zz;
 int old_i = 0;
 float za;
@@ -164,6 +165,7 @@ void loop() {
             digitalWrite( 8, 1);
             digitalWrite( 9, 1);
             delay(2);
+            if (!digitalRead(A2)) break;
             if (!digitalRead(A3)) break;
           };
         } else {
@@ -175,8 +177,10 @@ void loop() {
             digitalWrite( 8, 0);
             digitalWrite( 9, 1);
             delay(2);
+            if (!digitalRead(A2)) break;
             if (!digitalRead(A3)) break;
           };
+          if (!digitalRead(A2)) break;
         };
         while (!digitalRead(A3));
       };
@@ -209,6 +213,7 @@ void loop() {
     delay(10);
     lcd.begin(16, 2);
     lcd.print(" +0.  mm    ");
+    ppp5 = p5;
     do {
 
       lcd.setCursor(4, 0); lcd.print(p5);
@@ -218,6 +223,7 @@ void loop() {
         break;
       }
     } while (digitalRead(A2)); // menu
+    if (!digitalRead(A2)) p5 = ppp5;
     m = 0;
   };
 
