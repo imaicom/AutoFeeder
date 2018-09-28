@@ -61,10 +61,10 @@ void loop() {
   };
 
   if (m == 1) {
-    if (k == 2)lcd.setCursor(0, 0);
-    if (k == 3)lcd.setCursor(7, 0);
-    if (k == 4)lcd.setCursor(0, 1);
-    if (k == 5)lcd.setCursor(7, 1);
+    if (k == 2)lcd.setCursor(1, 0);
+    if (k == 3)lcd.setCursor(8, 0);
+    if (k == 4)lcd.setCursor(1, 1);
+    if (k == 5)lcd.setCursor(8, 1);
     if (!digitalRead(A3)) {
       delay(10);
       while (!digitalRead(A3));
