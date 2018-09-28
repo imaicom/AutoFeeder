@@ -12,6 +12,7 @@ int pp5 = 0;
 int ppp5 = 0;
 int z, zz;
 int old_i = 0;
+int clr = 0;
 float za;
 volatile int state = LOW;
 
@@ -38,12 +39,14 @@ void loop() {
 
   char buf[30];
 
-  if (!digitalRead(A2)) {
-    delay(10);
-    while (!digitalRead(A2));
-    m = 0;
-    k = 2;
-  }
+  if (m != 1) {
+    if (!digitalRead(A2)) {
+      delay(10);
+      while (!digitalRead(A2));
+      m = 0;
+      k = 2;
+    };
+  };
 
   if (m == 0) {
     lcd.begin(16, 2);
@@ -69,6 +72,19 @@ void loop() {
     }
     if (kk != k) beep();
     kk = k;
+    if (!digitalRead(A2)) {
+      clr++;
+      delay(1);
+      if (clr > 1000) {
+        hi_beep(); delay(100);
+        hi_beep(); delay(100);
+        hi_beep(); delay(100);
+        p5 = 0;
+        i = 0;
+        m = 0;
+        k = 2;
+      };
+    } else clr = 0;
   };
 
 
