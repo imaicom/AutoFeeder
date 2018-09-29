@@ -237,7 +237,7 @@ void loop() {
       if (!digitalRead(A3)) {
         delay(10);
         while (!digitalRead(A3));
-        hi_beep();
+        hi_beep(); k = 4;
         break;
       }
     } while (digitalRead(A2)); // menu
