@@ -101,9 +101,9 @@ void loop() {
   if (m == 22) {
     delay(10);
     lcd.begin(16, 2);
-    lcd.print(" Fwd        ");
-    lcd.setCursor(0, 1);
     lcd.print("            ");
+    lcd.setCursor(0, 1);
+    lcd.print(" Fwd        ");
     do {
 
       if (!digitalRead(A3)) {
@@ -122,18 +122,18 @@ void loop() {
   if (m == 3) {
     hi_beep();
     lcd.begin(16, 2);
-    lcd.print(" Back       ");
+    lcd.print("             ");
     lcd.setCursor(0, 1);
-    lcd.print("            ");
+    lcd.print("        Back ");
     m = 33;
   };
 
   if (m == 33) {
     delay(10);
     lcd.begin(16, 2);
-    lcd.print(" Back       ");
+    lcd.print("             ");
     lcd.setCursor(0, 1);
-    lcd.print("            ");
+    lcd.print("        Back ");
     do {
 
       if (!digitalRead(A3)) {
@@ -218,7 +218,7 @@ void loop() {
   if (m == 5) {
     hi_beep();
     lcd.begin(16, 2);
-    lcd.print(" +0.");
+    lcd.print("        +0.");
     lcd.print(p5);
     lcd.print("       ");
     lcd.setCursor(0, 1);
@@ -229,11 +229,11 @@ void loop() {
   if (m == 55) {
     delay(10);
     lcd.begin(16, 2);
-    lcd.print(" +0.  mm    ");
+    lcd.print("        +0.  mm    ");
     ppp5 = p5;
     do {
 
-      lcd.setCursor(4, 0); lcd.print(p5);
+      lcd.setCursor(11, 0); lcd.print(p5);
       if (!digitalRead(A3)) {
         delay(10);
         while (!digitalRead(A3));
