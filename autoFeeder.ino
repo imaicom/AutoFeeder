@@ -3,7 +3,7 @@
 LiquidCrystal lcd = LiquidCrystal(12, 11, 10, 5, 4, 3, 1);
 
 int m = 0;
-int k = 2;
+int k = 4;
 int kk = 2;
 int i = 0;
 int j = 0;
@@ -44,27 +44,27 @@ void loop() {
       delay(10);
       while (!digitalRead(A2));
       m = 0;
-      k = 2;
+      k = 4;
     };
   };
 
   if (m == 0) {
     lcd.begin(16, 2);
-    lcd.print(" Fwd    Back");
     lcd.setCursor(0, 1);
+    lcd.print(" Fwd    Back");
+    lcd.setCursor(0, 0);
     lcd.print(" Feed   +0.");
     lcd.print(p5);
     lcd.print(" mm");
     lcd.blink();
-    beep();
     m = 1;
   };
 
   if (m == 1) {
-    if (k == 2)lcd.setCursor(1, 0);
-    if (k == 3)lcd.setCursor(8, 0);
-    if (k == 4)lcd.setCursor(1, 1);
-    if (k == 5)lcd.setCursor(8, 1);
+    if (k == 2)lcd.setCursor(1, 1);
+    if (k == 3)lcd.setCursor(8, 1);
+    if (k == 4)lcd.setCursor(1, 0);
+    if (k == 5)lcd.setCursor(8, 0);
     if (!digitalRead(A3)) {
       delay(10);
       while (!digitalRead(A3));
@@ -82,14 +82,14 @@ void loop() {
         p5 = 0;
         i = 0;
         m = 0;
-        k = 2;
+        k = 4;
       };
     } else clr = 0;
   };
 
 
   if (m == 2) {
-    beep();
+    hi_beep();
     lcd.begin(16, 2);
     lcd.print(" Fwd        ");
     lcd.setCursor(0, 1);
@@ -120,7 +120,7 @@ void loop() {
   };
 
   if (m == 3) {
-    beep();
+    hi_beep();
     lcd.begin(16, 2);
     lcd.print(" Back       ");
     lcd.setCursor(0, 1);
@@ -150,7 +150,7 @@ void loop() {
   };
 
   if (m == 4) {
-    beep();
+    hi_beep();
     lcd.begin(16, 2);
     lcd.print(" Feed       ");
     lcd.setCursor(0, 1);
@@ -212,10 +212,11 @@ void loop() {
 
     } while (digitalRead(A2)); // menu
     m = 0;
+    kk = 0;
   };
 
   if (m == 5) {
-    beep();
+    hi_beep();
     lcd.begin(16, 2);
     lcd.print(" +0.");
     lcd.print(p5);
@@ -236,6 +237,7 @@ void loop() {
       if (!digitalRead(A3)) {
         delay(10);
         while (!digitalRead(A3));
+        hi_beep();
         break;
       }
     } while (digitalRead(A2)); // menu
