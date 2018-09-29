@@ -50,12 +50,12 @@ void loop() {
 
   if (m == 0) {
     lcd.begin(16, 2);
-    lcd.setCursor(0, 1);
-    lcd.print(" Fwd    Back");
     lcd.setCursor(0, 0);
     lcd.print(" Feed   +0.");
     lcd.print(p5);
     lcd.print(" mm");
+    lcd.setCursor(0, 1);
+    lcd.print(" Fwd    Back");
     lcd.blink();
     m = 1;
   };
@@ -76,6 +76,11 @@ void loop() {
       clr++;
       delay(1);
       if (clr > 1000) {
+        lcd.begin(16, 2);
+        lcd.setCursor(0, 0);
+        lcd.print(" Erase       ");
+        lcd.setCursor(0, 1);
+        lcd.print(" all settings");
         hi_beep(); delay(100);
         hi_beep(); delay(100);
         hi_beep(); delay(100);
@@ -91,6 +96,7 @@ void loop() {
   if (m == 2) {
     hi_beep();
     lcd.begin(16, 2);
+    lcd.setCursor(0, 0);
     lcd.print(" Fwd        ");
     lcd.setCursor(0, 1);
     lcd.print("            ");
@@ -100,10 +106,6 @@ void loop() {
 
   if (m == 22) {
     delay(10);
-    lcd.begin(16, 2);
-    lcd.print("            ");
-    lcd.setCursor(0, 1);
-    lcd.print(" Fwd        ");
     do {
 
       if (!digitalRead(A3)) {
@@ -121,16 +123,13 @@ void loop() {
 
   if (m == 3) {
     hi_beep();
-    lcd.begin(16, 2);
-    lcd.print("             ");
-    lcd.setCursor(0, 1);
-    lcd.print("        Back ");
     m = 33;
   };
 
   if (m == 33) {
     delay(10);
     lcd.begin(16, 2);
+    lcd.setCursor(0, 0);
     lcd.print("             ");
     lcd.setCursor(0, 1);
     lcd.print("        Back ");
@@ -151,16 +150,13 @@ void loop() {
 
   if (m == 4) {
     hi_beep();
-    lcd.begin(16, 2);
-    lcd.print(" Feed       ");
-    lcd.setCursor(0, 1);
-    lcd.print("            ");
     m = 44;
   };
 
   if (m == 44) {
     delay(10);
     lcd.begin(16, 2);
+    lcd.setCursor(0, 0);
     lcd.print(" Feed       ");
     lcd.setCursor(0, 1);
     lcd.print("            ");
@@ -217,18 +213,13 @@ void loop() {
 
   if (m == 5) {
     hi_beep();
-    lcd.begin(16, 2);
-    lcd.print("        +0.");
-    lcd.print(p5);
-    lcd.print("       ");
-    lcd.setCursor(0, 1);
-    lcd.print("            ");
     m = 55;
   };
 
   if (m == 55) {
     delay(10);
     lcd.begin(16, 2);
+    lcd.setCursor(0, 0);
     lcd.print("        +0.  mm    ");
     ppp5 = p5;
     do {
