@@ -129,7 +129,7 @@ void loop() {
         delay(2);
       }
     } while (digitalRead(A2)); // menu
-    
+
     m = 0;
 
   }; // if (m == 22)
@@ -143,7 +143,7 @@ void loop() {
     lcd.print("             ");
     lcd.setCursor(0, 1);
     lcd.print("        Back ");
-    
+
     m = 33;
 
   }; // if (m == 3)
@@ -162,7 +162,7 @@ void loop() {
         delay(2);
       }
     } while (digitalRead(A2)); // menu
-    
+
     m = 0;
 
   }; // if (m == 33)
@@ -295,9 +295,9 @@ void counta() {
   if (m == 44) {
     delay(1);
     if (!digitalRead(A5)) {
-      i = i + (30 - j);
+      if (j < 29) i = (i + (30 - j) / 10 * 10);else if (j == 29) i++;
     } else {
-      i = i - (30 - j);
+      if (j < 29) i = (i - (30 - j) / 10 * 10);else if (j == 29) i--;
     };
     if (i < -1400) i = -1400;
     if (i > 1400) i = 1400;
