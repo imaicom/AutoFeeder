@@ -295,9 +295,9 @@ void counta() {
   if (m == 44) {
     delay(1);
     if (!digitalRead(A5)) {
-      if (j < 29) i = (i + (30 - j) / 10 * 10);else if (j == 29) i++;
+      if (j < 27) i = ((i + (30 - j)) / 10 * 10); else if (j >= 27) i++;
     } else {
-      if (j < 29) i = (i - (30 - j) / 10 * 10);else if (j == 29) i--;
+      if (j < 27) i = ((i - (30 - j)) / 10 * 10); else if (j >= 27) i--;
     };
     if (i < -1400) i = -1400;
     if (i > 1400) i = 1400;
