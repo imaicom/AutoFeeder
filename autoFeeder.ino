@@ -1,66 +1,71 @@
+#include <math.h>
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd = LiquidCrystal(12, 11, 10, 5, 4, 3, 1);
 
-int m = 0;
-int k = 4;
-int kk = 2;
-int i = 0;
-int j = 0;
-int p5 = 0;
-int pp5 = 0;
-int ppp5 = 0;
-int z, zz;
-int old_i = 0;
-int clr = 0;
-float za;
-volatile int state = LOW;
+int m = 0;             // Menu transition
+int k = 4;             // Item selection( Feed )
+int before_k = 2;
+int i = 0;             // Encoder count
+int before_i = 0;
+int j = 0;             // Acceleration encoder count
+int p1 = 0;            // Decimal 1 digit setting
+int before_p1 = 0;
+int skip_p1 = 0;       // Return 1 decimal place setting
+int erase_setting = 0;
 
 
 void setup() {
-  pinMode( A0, INPUT_PULLUP );
-  pinMode( A1, INPUT_PULLUP );
-  pinMode( A2, INPUT_PULLUP );
-  pinMode( A3, INPUT_PULLUP );
-  pinMode(  2, INPUT_PULLUP );
-  pinMode( A5, INPUT_PULLUP );
+  pinMode( A2, INPUT_PULLUP ); // Menu button
+  pinMode( A3, INPUT_PULLUP ); // Encoder button
+  pinMode(  2, INPUT_PULLUP ); // Encoder count
+  pinMode( A5, INPUT_PULLUP ); // Rotational direction of encoder
 
-  pinMode( 7, OUTPUT );
-  pinMode( 8, OUTPUT );
-  pinMode( 9, OUTPUT );
-  digitalWrite( 7, 0 );
+  pinMode( 8, OUTPUT ); // Motor rotation direction
+  pinMode( 9, OUTPUT ); // Motor rotation pulse
   digitalWrite( 8, 0 );
   digitalWrite( 9, 0);
 
   attachInterrupt(0, counta, FALLING);  //INT0 - D2 pin
 }
 
+
 void loop() {
 
+
   char buf[30];
+  int z, zz;
+
 
   if (m != 1) {
+
     if (!digitalRead(A2)) {
       delay(10);
       while (!digitalRead(A2));
       m = 0;
       k = 4;
     };
-  };
+
+  }; // if (m != 1)
+
 
   if (m == 0) {
+
     lcd.begin(16, 2);
     lcd.setCursor(0, 0);
     lcd.print(" Feed   +0.");
-    lcd.print(p5);
+    lcd.print(p1);
     lcd.print(" mm");
     lcd.setCursor(0, 1);
     lcd.print(" Fwd    Back");
     lcd.blink();
     m = 1;
-  };
+
+  }; // if (m == 0)
+
 
   if (m == 1) {
+
     if (k == 2)lcd.setCursor(1, 1);
     if (k == 3)lcd.setCursor(8, 1);
     if (k == 4)lcd.setCursor(1, 0);
@@ -70,12 +75,15 @@ void loop() {
       while (!digitalRead(A3));
       m = k;
     }
-    if (kk != k) beep();
-    kk = k;
+
+    if (before_k != k) beep();
+    before_k = k;
+
     if (!digitalRead(A2)) {
-      clr++;
+      erase_setting++;
       delay(1);
-      if (clr > 1000) {
+
+      if (erase_setting > 1000) { // Press and hold for 1 second or longer
         lcd.begin(16, 2);
         lcd.setCursor(0, 0);
         lcd.print(" Erase       ");
@@ -84,16 +92,19 @@ void loop() {
         hi_beep(); delay(100);
         hi_beep(); delay(100);
         hi_beep(); delay(100);
-        p5 = 0;
-        i = 0;
         m = 0;
         k = 4;
+        p1 = 0;
+        i = 0;
       };
-    } else clr = 0;
-  };
+
+    } else erase_setting = 0;
+
+  }; // if (m == 1)
 
 
   if (m == 2) {
+
     hi_beep();
     lcd.begin(16, 2);
     lcd.setCursor(0, 0);
@@ -101,13 +112,14 @@ void loop() {
     lcd.setCursor(0, 1);
     lcd.print("            ");
     m = 22;
-  };
+
+  }; // if (m == 2)
 
 
   if (m == 22) {
+
     delay(10);
     do {
-
       if (!digitalRead(A3)) {
         digitalWrite( 8, 1);
         digitalWrite( 9, 0);
@@ -116,25 +128,31 @@ void loop() {
         digitalWrite( 9, 1);
         delay(2);
       }
-
     } while (digitalRead(A2)); // menu
+    
     m = 0;
-  };
+
+  }; // if (m == 22)
+
 
   if (m == 3) {
-    hi_beep();
-    m = 33;
-  };
 
-  if (m == 33) {
-    delay(10);
+    hi_beep();
     lcd.begin(16, 2);
     lcd.setCursor(0, 0);
     lcd.print("             ");
     lcd.setCursor(0, 1);
     lcd.print("        Back ");
-    do {
+    
+    m = 33;
 
+  }; // if (m == 3)
+
+
+  if (m == 33) {
+
+    delay(10);
+    do {
       if (!digitalRead(A3)) {
         digitalWrite( 8, 0);
         digitalWrite( 9, 0);
@@ -143,33 +161,40 @@ void loop() {
         digitalWrite( 9, 1);
         delay(2);
       }
-
     } while (digitalRead(A2)); // menu
+    
     m = 0;
-  };
+
+  }; // if (m == 33)
+
 
   if (m == 4) {
-    hi_beep();
-    m = 44;
-  };
 
-  if (m == 44) {
-    delay(10);
+    hi_beep();
     lcd.begin(16, 2);
     lcd.setCursor(0, 0);
     lcd.print(" Feed       ");
     lcd.setCursor(0, 1);
     lcd.print("            ");
-    do {
+    m = 44;
 
+  }; // if (m == 4)
+
+
+  if (m == 44) {
+
+    delay(10);
+    do {
       if (!digitalRead(A3)) {
         delay(10);
         while (!digitalRead(A3));
         hi_beep(); delay(500);
         hi_beep(); delay(500);
-        if (i > 0) {
-          if (i >= 2) z = int(float((float(abs(i + 2)) + float(p5) / 10.0) / 0.1727825));
-          else     z = int(float((float(abs(i  )) + float(p5) / 10.0) / 0.1727825));
+
+        if (i > 0) {  // Feed forward + Consider the blade thickness
+
+          if (i >= 2) z = int(float((float(abs(i + 2)) + float(p1) / 10.0) / (11.0 * M_PI / 360.0 * 1.8)));
+          else     z = int(float((float(abs(i)) + float(p1) / 10.0) / (11.0 * M_PI / 360.0 * 1.8)));
           for (zz = 1; zz <= z; zz++) {
             digitalWrite( 8, 1);
             digitalWrite( 9, 0);
@@ -177,11 +202,13 @@ void loop() {
             digitalWrite( 8, 1);
             digitalWrite( 9, 1);
             delay(2);
-            if (!digitalRead(A2)) break;
-            if (!digitalRead(A3)) break;
+            if (!digitalRead(A2)) break; // Emergency stop
+            if (!digitalRead(A3)) break; // Emergency stop
           };
-        } else {
-          z = int(float((float(abs(i)) + float(p5) / 10.0) / 0.1727825));
+
+        } else { // Negative feed
+
+          z = int(float((float(abs(i)) + float(p1) / 10.0) / (11.0 * M_PI / 360.0 * 1.8)));
           for (zz = 1; zz <= z; zz++) {
             digitalWrite( 8, 0);
             digitalWrite( 9, 0);
@@ -189,42 +216,50 @@ void loop() {
             digitalWrite( 8, 0);
             digitalWrite( 9, 1);
             delay(2);
-            if (!digitalRead(A2)) break;
-            if (!digitalRead(A3)) break;
+            if (!digitalRead(A2)) break; // Emergency stop
+            if (!digitalRead(A3)) break; // Emergency stop
           };
           if (!digitalRead(A2)) break;
+
         };
         while (!digitalRead(A3));
       };
 
-      j++; if (j > 29) j = 29;
-
       lcd.setCursor(0, 1);
-      if (i >= 2) sprintf(buf, "%4d.%1d mm + 2 mm", i, p5);
-      else     sprintf(buf, "%4d.%1d mm       ", i, p5);
+      if (i >= 2) sprintf(buf, "%4d.%1d mm + 2 mm", i, p1);
+      else     sprintf(buf, "%4d.%1d mm       ", i, p1);
       lcd.print(buf);
-      if (old_i != i) beep();
-      old_i = i;
+
+      j++; if (j > 29) j = 29; // Acceleration processing of encoder
+      if (before_i != i) beep();
+      before_i = i;
 
     } while (digitalRead(A2)); // menu
+
     m = 0;
-    kk = 0;
-  };
+    before_k = 0;
+
+  }; // if (m == 44)
+
 
   if (m == 5) {
-    hi_beep();
-    m = 55;
-  };
 
-  if (m == 55) {
-    delay(10);
+    hi_beep();
     lcd.begin(16, 2);
     lcd.setCursor(0, 0);
     lcd.print("        +0.  mm    ");
-    ppp5 = p5;
+    skip_p1 = p1;
+    m = 55;
+
+  }; // if (m == 5)
+
+
+  if (m == 55) {
+
+    delay(10);
     do {
 
-      lcd.setCursor(11, 0); lcd.print(p5);
+      lcd.setCursor(11, 0); lcd.print(p1);
       if (!digitalRead(A3)) {
         delay(10);
         while (!digitalRead(A3));
@@ -232,13 +267,18 @@ void loop() {
         break;
       }
     } while (digitalRead(A2)); // menu
-    if (!digitalRead(A2)) p5 = ppp5;
-    m = 0;
-  };
+    if (!digitalRead(A2)) p1 = skip_p1;
 
-}
+    m = 0;
+
+  }; // if (m == 55)
+
+
+} // void loop()
+
 
 void counta() {
+
 
   if (m == 1) {
     delay(1);
@@ -251,6 +291,7 @@ void counta() {
     if (k > 5)k = 2;
   };
 
+
   if (m == 44) {
     delay(1);
     if (!digitalRead(A5)) {
@@ -258,30 +299,33 @@ void counta() {
     } else {
       i = i - (30 - j);
     };
-    if (i < -1400)i = -1400;
-    if (i > 1400)i = 1400;
+    if (i < -1400) i = -1400;
+    if (i > 1400) i = 1400;
     j = 0;
   };
+
 
   if (m == 55) {
     delay(1);
     if (!digitalRead(A5)) {
-      p5++;
+      p1++;
     } else {
-      p5--;
+      p1--;
     };
-    if (p5 < 0)p5 = 9;
-    if (p5 > 9)p5 = 0;
-    if (pp5 != p5) beep();
-    pp5 = p5;
+    if (p1 < 0)p1 = 9;
+    if (p1 > 9)p1 = 0;
+    if (before_p1 != p1) beep();
+    before_p1 = p1;
   };
 
-} //counta()
+
+} // counta()
 
 
 void beep() {
-  int ii;
-  for (ii = 1; ii <= 200; ii++) {
+
+  int i;
+  for (i = 1; i <= 200; i++) {
     digitalWrite( 8, 1);
     digitalWrite( 9, 0);
     delayMicroseconds(100);
@@ -289,12 +333,14 @@ void beep() {
     digitalWrite( 9, 1);
     delayMicroseconds(100);
   };
+
 }
 
 
 void hi_beep() {
-  int ii;
-  for (ii = 1; ii <= 100; ii++) {
+
+  int i;
+  for (i = 1; i <= 100; i++) {
     digitalWrite( 8, 1);
     digitalWrite( 9, 0);
     delayMicroseconds(200);
@@ -302,4 +348,5 @@ void hi_beep() {
     digitalWrite( 9, 1);
     delayMicroseconds(200);
   };
+
 }
