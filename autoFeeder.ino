@@ -202,7 +202,7 @@ void loop() {
 
         if (i > 0) {  // Feed forward + Consider the blade thickness
 
-          if (i >= 2) z = int(float(abs(i)+2) / (11.0 * M_PI / 360.0 * 1.8));
+          if (i >= 2) z = int(float(abs(i)+1.6) / (11.0 * M_PI / 360.0 * 1.8));
           else     z = int(float(abs(i)) / (11.0 * M_PI / 360.0 * 1.8));
           z=z+p1;
           lcd.setCursor(12, 0);
@@ -238,8 +238,8 @@ void loop() {
       };
 
       lcd.setCursor(0, 1);
-      if (i >= 2) sprintf(buf, "%4d+2mm %+1d cnt", i, p1);
-      else     sprintf(buf, "%4dmm %+1d cnt  ", i, p1);
+      if (i >= 2) sprintf(buf, "%4d+1.6mm %+1dcnt", i, p1);
+      else     sprintf(buf, "%4dmm %+1dcnt  ", i, p1);
       lcd.print(buf);
 
       j++; 
