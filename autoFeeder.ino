@@ -238,8 +238,8 @@ void loop() {
       };
 
       lcd.setCursor(0, 1);
-      if (i >= 2) sprintf(buf, "%4d+1.6mm %+1dcnt", i, p1);
-      else     sprintf(buf, "%4dmm %+1dcnt  ", i, p1);
+      if (i >= 2) sprintf(buf, "%4d+1.6mm %+1dcnt  ", i, p1);
+      else     sprintf(buf, "%4dmm %+1dcnt    ", i, p1);
       lcd.print(buf);
 
       j++; 
