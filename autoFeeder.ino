@@ -209,7 +209,7 @@ void loop() {
           sprintf(buf, "%4d", z);
           lcd.print(buf);
           digitalWrite( 8, 1);
-          for (zz = 0; zz <= z; zz++) { 
+          for (zz = 1; zz <= z; zz++) { 
             digitalWrite( 9, 0);
             delay(2);
             digitalWrite( 9, 1);
@@ -219,11 +219,11 @@ void loop() {
           };
 
         } 
-        else { // Negative feed
+        else if(i < 0){ // Negative feed
 
           z = int(float(abs(i)) / (11.0 * M_PI / 360.0 * 1.8))+p1;
           digitalWrite( 8, 0);
-          for (zz = 0; zz <= z; zz++) {
+          for (zz = 1; zz <= z; zz++) {
             digitalWrite( 9, 0);
             delay(2);
             digitalWrite( 9, 1);
