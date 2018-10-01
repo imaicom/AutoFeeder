@@ -211,9 +211,9 @@ void loop() {
           digitalWrite( 8, 1);
           for (zz = 0; zz <= z; zz++) { 
             digitalWrite( 9, 0);
-            delay(3);
+            delay(2);
             digitalWrite( 9, 1);
-            delay(3);
+            delay(2);
             if (!digitalRead(A2)) break; // Emergency stop
             if (!digitalRead(A3)) break; // Emergency stop
           };
@@ -225,9 +225,9 @@ void loop() {
           digitalWrite( 8, 0);
           for (zz = 0; zz <= z; zz++) {
             digitalWrite( 9, 0);
-            delay(3);
+            delay(2);
             digitalWrite( 9, 1);
-            delay(3);
+            delay(2);
             if (!digitalRead(A2)) break; // Emergency stop
             if (!digitalRead(A3)) break; // Emergency stop
           };
@@ -306,8 +306,8 @@ void counta() {
     else {
       k--;
     };
-    if (k < 2)k = 5;
-    if (k > 5)k = 2;
+    if (k < 2) k = 5;
+    if (k > 5) k = 2;
   };
 
 
@@ -335,8 +335,8 @@ void counta() {
     else {
       p1--;
     };
-    if (p1 < -4)p1 = -4;
-    if (p1 > +4)p1 = +4;
+    if (p1 < -4) p1 = -4;
+    if (p1 > +4) p1 = +4;
     if (before_p1 != p1) beep();
     before_p1 = p1;
   };
